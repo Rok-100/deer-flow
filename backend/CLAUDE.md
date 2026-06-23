@@ -310,7 +310,7 @@ Proxied through nginx: `/api/langgraph/*` → Gateway LangGraph-compatible runti
 
 ### Subagent System (`packages/harness/deerflow/subagents/`)
 
-**Built-in Agents**: `general-purpose` (all tools except `task`) and `bash` (command specialist)
+**Built-in Agents**: `general-purpose` (all tools except `task`), `bash` (command specialist), and `jupyter-ai-agents` (JupyterLab notebook automation specialist that uses the `jupyter-ai-agents` CLI when URL/token/notebook/model details are supplied)
 **Execution**: Dual thread pool - `_scheduler_pool` (3 workers) + `_execution_pool` (3 workers)
 **Concurrency**: `MAX_CONCURRENT_SUBAGENTS = 3` enforced by `SubagentLimitMiddleware` (truncates excess tool calls in `after_model`); default subagent timeout `subagents.timeout_seconds=1800` (30 min) and built-in `general-purpose` `max_turns=150` (raised from 100/15-min so deep-research subtasks stop hitting `GraphRecursionError` out of the box)
 **Flow**: `task()` tool → `SubagentExecutor` → background thread → poll 5s → SSE events → result

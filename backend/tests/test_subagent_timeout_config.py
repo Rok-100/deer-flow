@@ -318,6 +318,21 @@ class TestRegistryGetSubagentConfig:
 
         assert get_subagent_config("general-purpose") is not None
         assert get_subagent_config("bash") is not None
+        assert get_subagent_config("jupyter-ai-agents") is not None
+
+    def test_jupyter_ai_agents_builtin_config(self):
+        from deerflow.subagents.registry import get_subagent_config
+
+        config = get_subagent_config("jupyter-ai-agents")
+
+        assert config is not None
+        assert config.name == "jupyter-ai-agents"
+        assert "jupyter-ai-agents CLI" in config.description
+        assert "jupyter-ai-agents --help" in config.system_prompt
+        assert config.tools == ["bash", "ls", "read_file", "write_file", "str_replace"]
+        assert config.disallowed_tools == ["task", "ask_clarification", "present_files"]
+        assert config.max_turns == 80
+        assert config.timeout_seconds == 900
 
     def test_explicit_global_timeout_propagates_to_general_purpose(self):
         """An explicit global timeout (here the non-default 900) propagates to a
@@ -518,6 +533,7 @@ class TestRegistryListSubagents:
         names = {cfg.name for cfg in list_subagents()}
         assert "general-purpose" in names
         assert "bash" in names
+        assert "jupyter-ai-agents" in names
 
     def test_all_returned_configs_get_global_override(self):
         from deerflow.subagents.registry import list_subagents

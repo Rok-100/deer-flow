@@ -1002,7 +1002,8 @@ sandbox:
 #   # Custom agents use their own timeout_seconds (default 900) unless overridden.
 #   timeout_seconds: 1800
 #   # Optional global max-turn override for all subagents.
-#   # Built-in defaults: general-purpose=150, bash=60. Leave unset to keep them.
+#   # Built-in defaults: general-purpose=150, bash=60, jupyter-ai-agents=80.
+#   # Leave unset to keep them.
 #   # max_turns: 120
 #
 #   # Optional per-agent overrides (applies to both built-in and custom agents)
@@ -1018,6 +1019,19 @@ sandbox:
 #       timeout_seconds: 300   # 5 minutes for quick command execution
 #       max_turns: 80
 #       # skills: []            # No skills for bash agent
+#     jupyter-ai-agents:
+#       timeout_seconds: 1800  # Notebook automation through the jupyter-ai-agents CLI
+#       max_turns: 120
+#       # model: claude-sonnet-4
+#
+#   # The built-in jupyter-ai-agents subagent expects the CLI and a running
+#   # JupyterLab target when it is asked to modify or execute notebooks:
+#   #   pip install jupyter_ai_agents
+#   #   pip uninstall -y pycrdt datalayer_pycrdt
+#   #   pip install datalayer_pycrdt==0.12.17
+#   #   jupyter lab --port 8888 --IdentityProvider.token MY_TOKEN
+#   # Then delegate with subagent_type="jupyter-ai-agents" and include the
+#   # JupyterLab URL, token, notebook path, and model string in the task prompt.
 #
 #   # Custom subagent types: define specialized agents with their own prompts,
 #   # tools, skills, and model configuration. Custom agents are available via

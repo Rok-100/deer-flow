@@ -477,6 +477,8 @@ DEERFLOW_LANGGRAPH_URL=http://localhost:2026/api/langgraph  # LangGraph API
 
 lead agent 可以按需动态拉起 sub-agents。每个 sub-agent 都有自己独立的上下文、工具和终止条件。只要条件允许，它们就会并行运行，返回结构化结果，最后再由 lead agent 汇总成一份完整输出。
 
+内置 sub-agent 类型包括 `general-purpose`、`bash` 和 `jupyter-ai-agents`。其中 `jupyter-ai-agents` 是 notebook（notebook）自动化专家，会在提供 JupyterLab（JupyterLab）URL、token（token）、notebook 路径和 model（model）字符串时，通过 `jupyter-ai-agents` CLI（CLI）处理 notebook 创建、执行、调试和错误解释。使用前需要单独安装 `pip install jupyter_ai_agents` 并启动 JupyterLab，再用 `subagent_type="jupyter-ai-agents"` 委派任务。
+
 这也是 DeerFlow 能处理从几分钟到几小时任务的原因。比如一个研究任务，可以拆成十几个 sub-agents，分别探索不同方向，最后合并成一份报告，或者一个网站，或者一套带生成视觉内容的演示文稿。一个 harness，多路并行。
 
 ### Sandbox 与文件系统
